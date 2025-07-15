@@ -1,0 +1,5 @@
+# Node modules (huge folder, auto-created)
+node_modules/
+
+# Environment variables
+.env

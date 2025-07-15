@@ -1,0 +1,8 @@
+# user permision
+p, user, product, veiw
+
+# admin permision
+p, admin, product, veiw
+p, admin, product, manage
+
+g, admin, user

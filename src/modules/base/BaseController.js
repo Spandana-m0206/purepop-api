@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const ApiResponse = require("../../utils/apiResponse");
 const ApiError = require("../../utils/apiError");
 
+
 class BaseController {
     constructor(service, resourceName='base') {
         if (!service) {
@@ -14,7 +15,7 @@ class BaseController {
     async create(req, res, next) {
         try {
             const data = await this.service.create(req.body);
-            return new ApiResponse(res, StatusCodes.CREATED, `${this.resourceName} created successfully`, data);
+            return new ApiResponse(StatusCodes.CREATED, data, `${this.resourceName} created successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - create]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to create ${this.resourceName}`, error));
@@ -23,8 +24,8 @@ class BaseController {
 
     async createBulk(req, res, next) {
         try {
-            const data = await this.service.createBulk(req.body);
-            return new ApiResponse(res, StatusCodes.CREATED, `${this.resourceName}s created successfully`, data);
+             const data = await this.service.createBulk(req.body);
+            return new ApiResponse(StatusCodes.CREATED, data, `${this.resourceName}s created successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - createBulk]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to create ${this.resourceName}s`, error));
@@ -34,7 +35,7 @@ class BaseController {
     async find(req, res, next) {
         try {
             const data = await this.service.find(req.query);
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName}s retrieved successfully`, data);
+            return new ApiResponse(StatusCodes.OK, data, `${this.resourceName}s retrieved successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - find]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to retrieve ${this.resourceName}s`, error));
@@ -47,7 +48,7 @@ class BaseController {
             if (!data) {
                 return next(new ApiError(StatusCodes.NOT_FOUND, "Resource not found"));
             }
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName} retrieved successfully`, data);
+            return new ApiResponse(StatusCodes.OK, data, `${this.resourceName} retrieved successfully`,res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - findById]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to retrieve ${this.resourceName}`, error));
@@ -60,7 +61,7 @@ class BaseController {
             if (!data) {
                 return next(new ApiError(StatusCodes.NOT_FOUND, `${this.resourceName} not found`));
             }
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName} retrieved successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName} retrieved successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - findOne]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to retrieve ${this.resourceName}`, error));
@@ -73,7 +74,7 @@ class BaseController {
             if(!data) {
                 return next(new ApiError( StatusCodes.NOT_FOUND,`${this.resourceName} not found` ));
             }
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName} updated successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName} updated successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - update]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to update ${this.resourceName}`, error));
@@ -83,7 +84,7 @@ class BaseController {
     async updateMany(req, res, next) {
         try {
             const data = await this.service.update(req.query, req.body);
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName}s updated successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data,`${this.resourceName}s updated successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - updateMany]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to update ${this.resourceName}s`, error));
@@ -96,7 +97,7 @@ class BaseController {
             if(!data) {
                 return next(new ApiError( StatusCodes.NOT_FOUND,`${this.resourceName} not found` ));
             }
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName} deleted successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName} deleted successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - delete]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to delete ${this.resourceName}`, error));
@@ -106,7 +107,7 @@ class BaseController {
     async deleteMany(req, res, next) {
         try {
             const data = await this.service.delete(req.query);
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName}s deleted successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName}s deleted successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - deleteMany]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to delete ${this.resourceName}s`, error));
@@ -119,7 +120,7 @@ class BaseController {
             if (!data) {
                 return next(new ApiError(StatusCodes.NOT_FOUND, "Resource not found"));
             }
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName} updated successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName} updated successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - findOneAndUpdate]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to update ${this.resourceName}`, error));
@@ -130,7 +131,7 @@ class BaseController {
         try {
             const { page = 1, limit = 10 } = req.query;
             const data = await this.service.findPaginated(req.query, page, limit);
-            return new ApiResponse(res, StatusCodes.OK, `${this.resourceName}s retrieved successfully`, data);
+            return new ApiResponse(res, StatusCodes.OK, data, `${this.resourceName}s retrieved successfully`, res);
         } catch (error) {
             console.error(`[${this.resourceName}Controller Error - findPaginated]: ${error.message}`);
             next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, `Failed to retrieve ${this.resourceName}s`, error));

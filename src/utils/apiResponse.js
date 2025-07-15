@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 
 class ApiResponse{
     
-    constructor(res, statusCode=StatusCodes.OK, data={}, message="Success", data=null){
+    constructor(statusCode=StatusCodes.OK, data={}, message="Success", res=null){
         this.statusCode = statusCode;
         this.success = statusCode >= StatusCodes.OK && statusCode < StatusCodes.MULTIPLE_CHOICES;
         this.message = message;

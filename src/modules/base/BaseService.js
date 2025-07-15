@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const ApiError = require("../../utils/apiError");
 const OPERATION_TYPES = require("./utils/baseOperationTypes");
 
+
 class BaseService{
     
     constructor(model){
@@ -21,7 +22,7 @@ class BaseService{
     }
 
     async create(data){
-        return this.handleOperation(this.model.ctreate.bind(this.model), OPERATION_TYPES.CREATE, data);
+        return this.handleOperation(this.model.create.bind(this.model), OPERATION_TYPES.CREATE, data);
     }
 
     async createBulk(dataArray){
@@ -95,4 +96,4 @@ class BaseService{
     }
 }
 
-module.exports = BaseService;
+module.exports =BaseService;

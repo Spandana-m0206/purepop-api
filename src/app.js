@@ -1,27 +1,24 @@
 require("dotenv").config();
 
-const express =require("express");
-const helmet =require("helmet");
-const routes=require("./modules");
-const compression=require("compression");
-const {connectDB}=require("./config/database");
+const express = require("express");
+const helmet = require("helmet");
+const routes = require("./modules");
+const compression = require("compression");
+const { ErrorMiddleware } = require("./middlewares/error.middleware");
 
-const app=express();
+const app = express();
 
-//security Middlewares
+// Security Middleware
 app.use(helmet());
 app.use(compression());
 
-//body parser
+// Body parser
 app.use(express.json());
 
-//routes
+// API Routes
 app.use("/api", routes);
 
-// Error Handling Middleware
-app.use(require("./middlewares/error.middleware"));
+// Error Handler
+app.use(ErrorMiddleware);
 
-//connect to Database
-connectDB();
-
-module.exports= app;
+module.exports = app;

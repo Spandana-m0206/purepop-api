@@ -23,7 +23,7 @@ const connectDB= async ()=>{
         }
         
     } catch (error) {
-        logger.error(`MongoDB connection error: ${err.message}`);
+        console.error(`MongoDB connection error: ${error.message}`);
         process.exit(1);      
     }
 }

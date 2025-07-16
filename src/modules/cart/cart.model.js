@@ -1,40 +1,27 @@
 const mongoose=require('mongoose')
 const extendSchema = require('../base/BaseModel');
-const ProductModel = require('../product/product.model');
 
-const cartFeilds = {
+const cartFields = {
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
+  },    
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true
   },
-  items: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        default: 1
-      },
-          price: {
-        price: Number,
-        required: true
-    }
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1
+  },   
 
-    }
-  ],
-  totalCartValue:{
-    type:Number,
-    default: 0
-  }
 }
 
-const cartSchema=extendSchema(cartFeilds);
+const cartSchema=extendSchema(cartFields);
 
-const CartMOdel= mongoose.model('Cart', cartSchema);
+const CartModel= mongoose.model('Cart', cartSchema);
 
-module.exports = CartMOdel;
+module.exports = CartModel;

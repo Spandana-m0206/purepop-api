@@ -7,4 +7,4 @@ class ProductService extends BaseService{
     }
 }
 
-module.exports = new ProductModel();
+module.exports = new ProductService();

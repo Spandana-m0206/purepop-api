@@ -1,8 +1,12 @@
 # user permision
-p, user, product, veiw
+p, user, product, view
+p, user, cart, view
+p, user, cart, manage
+p, user, order, view
+p, user, order, manage
 
 # admin permision
-p, admin, product, veiw
+p, admin, product, view
 p, admin, product, manage
 
 g, admin, user
